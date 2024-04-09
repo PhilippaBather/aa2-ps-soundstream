@@ -14,9 +14,8 @@ import java.util.Base64;
 
 public class TokenService {
 
-    private final String CLIENT_ID = "";
-    private final String CLIENT_SECRET = "";
-    private final String BASE_URL = "https://accounts.spotify.com";
+    private final String CLIENT_ID = System.getenv("SPOTIFY_CLIENT_ID");
+    private final String CLIENT_SECRET = System.getenv("SPOTIFY_CLIENT_SECRET");
     private final MusicAPI musicAPI;
     public TokenService() {
 
