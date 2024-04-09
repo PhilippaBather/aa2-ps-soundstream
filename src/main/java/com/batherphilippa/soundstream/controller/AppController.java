@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 public class AppController implements Initializable {
 
     @FXML
-    private TextField artistTextInput;
+    private TextField artistInput;
 
     @FXML
     private Button searchBtn;
@@ -27,10 +27,10 @@ public class AppController implements Initializable {
 
     @FXML
     void searchAlbums(ActionEvent event) {
-        String requestedArtist = this.artistTextInput.getText();
-        this.artistTextInput.clear();
-        this.artistTextInput.requestFocus();
-        AlbumTask albumTask = new AlbumTask();
+        String requestedArtist = this.artistInput.getText();
+        this.artistInput.clear();
+        this.artistInput.requestFocus();
+        AlbumTask albumTask = new AlbumTask(requestedArtist);
         new Thread(albumTask).start();
     }
 }
