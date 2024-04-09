@@ -6,6 +6,7 @@ import retrofit2.http.*;
 
 public interface MusicAPI {
 
+    @FormUrlEncoded
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST("api/token")
     Observable<Token> getToken(@Header("Authorization") String auth, @Field("grant_type") String grantType);
