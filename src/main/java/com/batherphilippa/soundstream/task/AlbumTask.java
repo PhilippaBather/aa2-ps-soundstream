@@ -5,6 +5,13 @@ import io.reactivex.functions.Consumer;
 import javafx.concurrent.Task;
 
 public class AlbumTask extends Task<Integer> {
+
+    private final String query;
+
+    public AlbumTask(String query) {
+        this.query = query;
+    }
+
     @Override
     protected Integer call() throws Exception {
         MusicService musicService = new MusicService();
@@ -20,7 +27,7 @@ public class AlbumTask extends Task<Integer> {
             musicService.getAlbumNames(id).subscribe(consumer1, Throwable::printStackTrace);
         };
 
-        musicService.getArtist().subscribe(consumer, Throwable::printStackTrace);
+        musicService.getArtist(query).subscribe(consumer, Throwable::printStackTrace);
 
         return null;
 
