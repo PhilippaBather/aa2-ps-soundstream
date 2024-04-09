@@ -2,6 +2,7 @@ package com.batherphilippa.soundstream.service;
 
 import com.batherphilippa.soundstream.model.*;
 import com.batherphilippa.soundstream.task.TokenTask;
+import com.batherphilippa.soundstream.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.reactivex.Observable;
@@ -41,8 +42,8 @@ public class MusicService {
         this.musicAPI = retrofit.create(MusicAPI.class);
     }
 
-    public Observable<String> getArtist() {
-        String q = "mark%2520lettieri";
+    public Observable<String> getArtist(String query) {
+        String q = StringUtils.formatQuery(query);
         String type = "artist";
         String auth = "Bearer " + TokenTask.accessToken;
         return this.musicAPI.getArtists(auth, q, type, 1)
@@ -59,5 +60,4 @@ public class MusicService {
                 .flatMapIterable(album -> album)
                 .map(Album::getName);
     }
-
 }
