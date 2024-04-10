@@ -21,7 +21,7 @@ public interface MusicAPI {
 
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @GET("v1/search")
-    Observable<TrackSearchResults> getTrackByNameAndArtist(@Header("Authorization") String auth, @Query("q") String q, @Query("type") String type, @Query("limit") int limit);
+    Observable<TrackSearchResults> getTrackByNameAndArtist(@Header("Authorization") String auth, @Query("q") String q, @Query("type") String type);
 
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @GET("v1/audio-features/{id}")
