@@ -2,7 +2,6 @@ package com.batherphilippa.soundstream.service;
 
 import com.batherphilippa.soundstream.model.*;
 import com.batherphilippa.soundstream.task.TokenTask;
-import com.batherphilippa.soundstream.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.reactivex.Observable;
@@ -42,8 +41,7 @@ public class MusicService {
         this.musicAPI = retrofit.create(MusicAPI.class);
     }
 
-    public Observable<String> getArtist(String query) {
-        String q = StringUtils.formatQuery(query);
+    public Observable<String> getArtist(String q) {
         String type = "artist";
         String auth = "Bearer " + TokenTask.accessToken;
         return this.musicAPI.getArtists(auth, q, type, 1)
@@ -61,10 +59,8 @@ public class MusicService {
                 .map(Album::getName);
     }
 
-    public Observable<String> getTrackId(){
+    public Observable<String> getTrackId(String q){
         String auth = "Bearer " + TokenTask.accessToken;
-//        String q = "song%3Aroller%2520coaster%2520of%2520love%2520artist%3AOhio%2520Players";
-        String q = "song:roller+coaster+of+love+artist:Ohio+Players";
         return this.musicAPI.getTrackByNameAndArtist(auth, q, "track", 1)
                 .map(TrackSearchResults::getTracks)
                 .map(Tracks::getItems)
@@ -74,7 +70,6 @@ public class MusicService {
 
     public Observable<Integer> getTrackKey(String trackId) {
         String auth = "Bearer " + TokenTask.accessToken;
-//        String id = "1hRDHWWealh2Pk3fnpIe75";
         return this.musicAPI.getTrackKey(auth, trackId)
                 .map(TrackAudioFeatures::getKey);
 
