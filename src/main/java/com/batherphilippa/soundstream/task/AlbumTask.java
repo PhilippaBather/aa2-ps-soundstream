@@ -2,14 +2,17 @@ package com.batherphilippa.soundstream.task;
 
 import com.batherphilippa.soundstream.service.MusicService;
 import io.reactivex.functions.Consumer;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
 public class AlbumTask extends Task<Integer> {
 
     private final String query;
+    private ObservableList<String> albums;
 
-    public AlbumTask(String query) {
+    public AlbumTask(String query, ObservableList<String> albums) {
         this.query = query;
+        this.albums = albums;
     }
 
     @Override
@@ -22,7 +25,7 @@ public class AlbumTask extends Task<Integer> {
 
             Consumer<String> consumer1 = (album) -> {
                 Thread.sleep(250);
-                System.out.println("Album name: " + album);
+                albums.add(album);
             };
             musicService.getAlbumNames(id).subscribe(consumer1, Throwable::printStackTrace);
         };
