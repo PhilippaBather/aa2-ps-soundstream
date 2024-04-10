@@ -37,7 +37,9 @@ public class TrackController implements Initializable, MusicController {
     private String query;
     private Tab tab;
 
+    private TrackTask trackTask;
     private ObservableList<String> tracks;
+
     public TrackController(String trackQuery, String artistQuery) {
         this.query = formatTrackQuery(trackQuery, artistQuery);
         this.tab = new Tab();
@@ -47,7 +49,7 @@ public class TrackController implements Initializable, MusicController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tracks = FXCollections.observableArrayList();
         this.respListView.setItems(this.tracks);
-        TrackTask trackTask = new TrackTask(this.query, this.tracks);
+        this.trackTask = new TrackTask(this.query, this.tracks);
         new Thread(trackTask).start();
     }
 
@@ -58,7 +60,7 @@ public class TrackController implements Initializable, MusicController {
     @Override
     public void setTab(Tab tab) {
         this.tab = tab;
-//        tab.setOnClosed(e -> trackTask.cancel());
+        tab.setOnClosed(e -> this.trackTask.cancel());
     }
 
 }
