@@ -55,8 +55,6 @@ public class AppController implements Initializable {
         TabController tabController = new TabController(query);
         loader.setController(tabController);
         openTab(loader, query, tabController);
-//        AlbumTask albumTask = new AlbumTask(artistQuery);
-//        new Thread(albumTask).start();
     }
 
     private void openTab(FXMLLoader loader, String query, TabController controller) {
