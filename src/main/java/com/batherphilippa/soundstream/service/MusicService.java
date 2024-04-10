@@ -60,4 +60,23 @@ public class MusicService {
                 .flatMapIterable(album -> album)
                 .map(Album::getName);
     }
+
+    public Observable<String> getTrackId(){
+        String auth = "Bearer " + TokenTask.accessToken;
+//        String q = "song%3Aroller%2520coaster%2520of%2520love%2520artist%3AOhio%2520Players";
+        String q = "song:roller+coaster+of+love+artist:Ohio+Players";
+        return this.musicAPI.getTrackByNameAndArtist(auth, q, "track", 1)
+                .map(TrackSearchResults::getTracks)
+                .map(Tracks::getItems)
+                .flatMapIterable(track -> track)
+                .map(Track::getId);
+    }
+
+    public Observable<Integer> getTrackKey(String trackId) {
+        String auth = "Bearer " + TokenTask.accessToken;
+//        String id = "1hRDHWWealh2Pk3fnpIe75";
+        return this.musicAPI.getTrackKey(auth, trackId)
+                .map(TrackAudioFeatures::getKey);
+
+    }
 }
