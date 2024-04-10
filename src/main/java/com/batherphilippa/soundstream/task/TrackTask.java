@@ -25,8 +25,6 @@ public class TrackTask extends Task<Integer> {
 
         Consumer<Track> consumer = (track) -> {
             Thread.sleep(250);
-            String albumName = track.getAlbum().getName();
-            String artistName = track.getAlbum().getArtists().get(0).getName();
 
             Consumer<TrackAudioFeatures> consumer1 = (audioFeatures) -> {
                 Thread.sleep(250);
@@ -65,7 +63,7 @@ public class TrackTask extends Task<Integer> {
      * @param audioFeatures - object containing a track's audio features
      * @return String - dominant musical key
      */
-    private String getDominantKey(TrackAudioFeatures audioFeatures) {
+    private String getDominantKey(TrackAudioFeatures audioFeatures) throws IllegalStateException {
         String key = switch (audioFeatures.getKey()) {
             case 0 -> "C";
             case 1 -> "C#";
