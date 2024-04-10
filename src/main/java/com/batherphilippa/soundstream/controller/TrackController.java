@@ -1,6 +1,6 @@
 package com.batherphilippa.soundstream.controller;
 
-import com.batherphilippa.soundstream.task.AlbumTask;
+import com.batherphilippa.soundstream.task.TrackTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +16,9 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TabController implements Initializable {
+import static com.batherphilippa.soundstream.utils.StringUtils.formatTrackQuery;
+
+public class TrackController implements Initializable, MusicController {
 
     @FXML
     private AnchorPane responsePane;
@@ -35,29 +37,28 @@ public class TabController implements Initializable {
     private String query;
     private Tab tab;
 
-    private ObservableList<String> albums;
-
-    public TabController(String query) {
-        this.query = query;
+    private ObservableList<String> tracks;
+    public TrackController(String trackQuery, String artistQuery) {
+        this.query = formatTrackQuery(trackQuery, artistQuery);
         this.tab = new Tab();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.albums = FXCollections.observableArrayList();
-        this.respListView.setItems(this.albums);
-        AlbumTask albumTask = new AlbumTask(this.query, this.albums);
-        new Thread(albumTask).start();
+        this.tracks = FXCollections.observableArrayList();
+        this.respListView.setItems(this.tracks);
+        TrackTask trackTask = new TrackTask(this.query, this.tracks);
+        new Thread(trackTask).start();
     }
 
     @FXML
     private void filterList(ActionEvent event) {
 
     }
-
+    @Override
     public void setTab(Tab tab) {
         this.tab = tab;
-//        tab.setOnClosed(e -> albumTask.cancel());
+//        tab.setOnClosed(e -> trackTask.cancel());
     }
 
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static com.batherphilippa.soundstream.utils.Constants.UI_NOTIFICATION_BLANK_QUERY;
+import static com.batherphilippa.soundstream.utils.Constants.*;
 
 public class AppController implements Initializable {
 
@@ -20,7 +20,15 @@ public class AppController implements Initializable {
     private TextField artistInput;
 
     @FXML
-    private Button searchBtn;
+    private Button albumSearchBtn;
+
+    @FXML
+    private TextField trackTitleInput;
+    @FXML
+    private TextField trackArtistInput;
+
+    @FXML
+    private Button trackSearchBtn;
 
     @FXML
     private TabPane tabPaneManager;
@@ -38,26 +46,54 @@ public class AppController implements Initializable {
     void searchAlbums(ActionEvent event) {
         String artistQuery = this.artistInput.getText();
 
-        if(artistQuery.trim().length() == 0) {
-            NotificationUtils.showAlertDialog(UI_NOTIFICATION_BLANK_QUERY, Alert.AlertType.INFORMATION);
+        if(artistQuery.trim().length() == 0 || artistQuery.equals(PROMPT_ARTIST_SEARCH)) {
+            NotificationUtils.showAlertDialog(UI_NOTIFICATION_BLANK_QUERY_ARTIST, Alert.AlertType.INFORMATION);
+            this.artistInput.setText(PROMPT_ARTIST_SEARCH);
             return;
         } else {
-            launchTabController(artistQuery);
+            launchAlbumController(artistQuery);
         }
 
         this.artistInput.clear();
+        this.artistInput.setText(PROMPT_ARTIST_SEARCH);
         this.artistInput.requestFocus();
-
     }
 
-    private void launchTabController(String query) {
+    @FXML
+    void searchTrack(ActionEvent event) {
+        System.out.println("Search track");
+
+        String trackQuery = this.trackTitleInput.getText();
+        String artistQuery = this.trackArtistInput.getText();
+
+        if (trackQuery.trim().length() == 0 || trackQuery.equals(PROMPT_TRACK_SEARCH)) {
+            NotificationUtils.showAlertDialog(UI_NOTIFICATION_BLANK_QUERY_TRACK, Alert.AlertType.INFORMATION);
+            this.trackTitleInput.setText(PROMPT_TRACK_SEARCH);
+            this.trackArtistInput.setText(PROMPT_ARTIST_SEARCH);
+            return;
+        } else {
+            launchTrackController(trackQuery, artistQuery);
+        }
+
+        this.trackTitleInput.clear();
+        this.trackTitleInput.setText(PROMPT_TRACK_SEARCH);
+    }
+
+    private void launchAlbumController(String query) {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("/soundstream/progress_pane.fxml")));
-        TabController tabController = new TabController(query);
-        loader.setController(tabController);
-        openTab(loader, query, tabController);
+        AlbumController albumController = new AlbumController(query);
+        loader.setController(albumController);
+        openTab(loader, query, albumController);
     }
 
-    private void openTab(FXMLLoader loader, String query, TabController controller) {
+    private void launchTrackController(String trackQuery, String artistQuery) {
+        FXMLLoader loader = new FXMLLoader(((getClass().getResource("/soundstream/progress_pane.fxml"))));
+        TrackController trackController = new TrackController(trackQuery, artistQuery);
+        loader.setController(trackController);
+        openTab(loader, trackQuery, trackController);
+    }
+
+    private void openTab(FXMLLoader loader, String query, MusicController controller) {
         Tab tab;
         try {
             tab = new Tab(query, loader.load());

@@ -12,8 +12,12 @@
       <font>
          <Font size="18.0" />
       </font></Text>
-    <TextField fx:id="artistInput" layoutX="42.0" layoutY="73.0" prefHeight="25.0" prefWidth="369.0" />
-    <Button fx:id="searchBtn" layoutX="426.0" layoutY="73.0" mnemonicParsing="false" onAction="#searchAlbums" text="Search" />
-   <TabPane fx:id="tabPaneManager" layoutX="21.0" layoutY="126.0" prefHeight="301.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE" />
    <Text layoutX="42.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search for an artist's albums" />
+    <TextField fx:id="artistInput" layoutX="42.0" layoutY="73.0" prefHeight="25.0" prefWidth="369.0" text="Artist name" />
+    <Button fx:id="albumSearchBtn" layoutX="426.0" layoutY="73.0" mnemonicParsing="false" onAction="#searchAlbums" text="Search" />
+   <Text layoutX="42.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search for a track's audio features" />
+   <TextField fx:id="trackTitleInput" layoutX="42.0" layoutY="121.0" prefHeight="25.0" prefWidth="166.0" text="Track name" />
+   <TextField fx:id="trackArtistInput" layoutX="232.0" layoutY="121.0" prefHeight="25.0" prefWidth="179.0" text="Artist name" />
+   <Button fx:id="trackSearchBtn" layoutX="426.0" layoutY="121.0" mnemonicParsing="false" onAction="#searchTrack" text="Search" />
+   <TabPane fx:id="tabPaneManager" layoutX="21.0" layoutY="157.0" prefHeight="270.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE" />
 </AnchorPane>
