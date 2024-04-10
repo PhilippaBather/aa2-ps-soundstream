@@ -37,7 +37,7 @@ public class MusicService {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        // crear la interfaz
+        // create interface
         this.musicAPI = retrofit.create(MusicAPI.class);
     }
 
@@ -58,19 +58,17 @@ public class MusicService {
                 .flatMapIterable(album -> album);
     }
 
-    public Observable<String> getTrackId(String q) {
+    public Observable<Track> getTrackId(String q) {
         String auth = "Bearer " + TokenTask.accessToken;
-        return this.musicAPI.getTrackByNameAndArtist(auth, q, "track", 1)
+        return this.musicAPI.getTrackByNameAndArtist(auth, q, "track")
                 .map(TrackSearchResults::getTracks)
                 .map(Tracks::getItems)
-                .flatMapIterable(track -> track)
-                .map(Track::getId);
+                .flatMapIterable(track -> track);
     }
 
-    public Observable<Integer> getTrackKey(String trackId) {
+    public Observable<TrackAudioFeatures> getTrackKey(String trackId) {
         String auth = "Bearer " + TokenTask.accessToken;
         return this.musicAPI.getTrackKey(auth, trackId)
-                .map(TrackAudioFeatures::getKey);
-
+                .map(audioFeatures -> audioFeatures);
     }
 }
