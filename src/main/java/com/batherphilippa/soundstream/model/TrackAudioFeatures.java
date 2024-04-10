@@ -27,5 +27,6 @@ public class TrackAudioFeatures {
     private String uri;
     private String trackHref;
     private String analysisUrl;
-    private int durationMs;
+    private int duration_mss;
+    private int time_signature;
 }
