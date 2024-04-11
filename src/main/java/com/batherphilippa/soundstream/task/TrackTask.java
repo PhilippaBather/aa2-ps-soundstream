@@ -4,6 +4,7 @@ import com.batherphilippa.soundstream.model.Track;
 import com.batherphilippa.soundstream.model.TrackAudioFeatures;
 import com.batherphilippa.soundstream.service.MusicService;
 import io.reactivex.functions.Consumer;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
@@ -29,7 +30,7 @@ public class TrackTask extends Task<Integer> {
             Consumer<TrackAudioFeatures> consumer1 = (audioFeatures) -> {
                 Thread.sleep(250);
                 String trackData = parseData(track, audioFeatures);
-                tracks.add(trackData);
+                Platform.runLater(() -> tracks.add(trackData));
             };
 
             musicService.getTrackKey(track.getId()).subscribe(consumer1, Throwable::printStackTrace);

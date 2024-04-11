@@ -3,6 +3,7 @@ package com.batherphilippa.soundstream.task;
 import com.batherphilippa.soundstream.model.Album;
 import com.batherphilippa.soundstream.service.MusicService;
 import io.reactivex.functions.Consumer;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
@@ -27,7 +28,7 @@ public class AlbumTask extends Task<Integer> {
             Consumer<Album> consumer1 = (album) -> {
                 Thread.sleep(250);
                 String result = parseData(album);
-                albums.add(result);
+                Platform.runLater(() -> albums.add(result));
             };
             musicService.getAlbumNames(id).subscribe(consumer1, Throwable::printStackTrace);
         };
