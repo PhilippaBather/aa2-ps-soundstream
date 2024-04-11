@@ -51,15 +51,14 @@ public class MusicService {
                 .map(Items::getId);
     }
 
-    public Observable<String> getAlbumNames(String id) {
+    public Observable<Album> getAlbumNames(String id) {
         String auth = "Bearer " + TokenTask.accessToken;
         return this.musicAPI.getArtistsAlbums(auth, id)
                 .map(AlbumSearchResults::getItems)
-                .flatMapIterable(album -> album)
-                .map(Album::getName);
+                .flatMapIterable(album -> album);
     }
 
-    public Observable<String> getTrackId(String q){
+    public Observable<String> getTrackId(String q) {
         String auth = "Bearer " + TokenTask.accessToken;
         return this.musicAPI.getTrackByNameAndArtist(auth, q, "track", 1)
                 .map(TrackSearchResults::getTracks)

@@ -1,5 +1,6 @@
 package com.batherphilippa.soundstream.task;
 
+import com.batherphilippa.soundstream.model.Album;
 import com.batherphilippa.soundstream.service.MusicService;
 import io.reactivex.functions.Consumer;
 import javafx.collections.ObservableList;
@@ -23,9 +24,10 @@ public class AlbumTask extends Task<Integer> {
         Consumer<String> consumer = (id) -> {
             Thread.sleep(250);
 
-            Consumer<String> consumer1 = (album) -> {
+            Consumer<Album> consumer1 = (album) -> {
                 Thread.sleep(250);
-                albums.add(album);
+                String result = parseData(album);
+                albums.add(result);
             };
             musicService.getAlbumNames(id).subscribe(consumer1, Throwable::printStackTrace);
         };
@@ -34,5 +36,15 @@ public class AlbumTask extends Task<Integer> {
 
         return null;
 
+    }
+
+    private String parseData(Album album) {
+        return new StringBuilder()
+                .append("Album: ")
+                .append(album.getName())
+                .append(" | Total tracks: ")
+                .append(album.getTotal_tracks())
+                .append(" | Released: ")
+                .append(album.getRelease_date()).toString();
     }
 }
