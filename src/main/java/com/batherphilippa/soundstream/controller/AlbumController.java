@@ -34,8 +34,10 @@ public class AlbumController implements Initializable, MusicController {
 
     @FXML
     private Button filterBtn;
-    private String query;
+    private final String query;
     private Tab tab;
+
+    private AlbumTask albumTask;
 
     private ObservableList<String> albums;
 
@@ -48,7 +50,7 @@ public class AlbumController implements Initializable, MusicController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.albums = FXCollections.observableArrayList();
         this.respListView.setItems(this.albums);
-        AlbumTask albumTask = new AlbumTask(this.query, this.albums);
+        this.albumTask = new AlbumTask(this.query, this.albums);
         new Thread(albumTask).start();
     }
 
@@ -61,6 +63,6 @@ public class AlbumController implements Initializable, MusicController {
     @Override
     public void setTab(Tab tab) {
         this.tab = tab;
-//        tab.setOnClosed(e -> albumTask.cancel());
+        tab.setOnClosed(e -> this.albumTask.cancel());
     }
 }

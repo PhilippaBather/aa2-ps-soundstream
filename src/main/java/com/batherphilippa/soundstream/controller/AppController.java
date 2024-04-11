@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.batherphilippa.soundstream.controller.ControllerType.ALBUM;
+import static com.batherphilippa.soundstream.controller.ControllerType.TRACK;
 import static com.batherphilippa.soundstream.utils.Constants.*;
+import static com.batherphilippa.soundstream.utils.StringUtils.formatTabTitle;
 
 public class AppController implements Initializable {
 
@@ -69,7 +72,7 @@ public class AppController implements Initializable {
         if (trackQuery.trim().length() == 0 || trackQuery.equals(PROMPT_TRACK_SEARCH)) {
             NotificationUtils.showAlertDialog(UI_NOTIFICATION_BLANK_QUERY_TRACK, Alert.AlertType.INFORMATION);
             this.trackTitleInput.setText(PROMPT_TRACK_SEARCH);
-            this.trackArtistInput.setText(PROMPT_ARTIST_SEARCH);
+            this.trackArtistInput.setText(PROMPT_ARTIST_TRACK_SEARCH);
             return;
         } else {
             launchTrackController(trackQuery, artistQuery);
@@ -77,26 +80,29 @@ public class AppController implements Initializable {
 
         this.trackTitleInput.clear();
         this.trackTitleInput.setText(PROMPT_TRACK_SEARCH);
+        this.trackArtistInput.setText(PROMPT_ARTIST_TRACK_SEARCH);
     }
 
     private void launchAlbumController(String query) {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("/soundstream/progress_pane.fxml")));
         AlbumController albumController = new AlbumController(query);
         loader.setController(albumController);
-        openTab(loader, query, albumController);
+        openTab(loader, query, albumController, ALBUM);
     }
 
     private void launchTrackController(String trackQuery, String artistQuery) {
         FXMLLoader loader = new FXMLLoader(((getClass().getResource("/soundstream/progress_pane.fxml"))));
         TrackController trackController = new TrackController(trackQuery, artistQuery);
         loader.setController(trackController);
-        openTab(loader, trackQuery, trackController);
+        openTab(loader, trackQuery, trackController, TRACK);
     }
 
-    private void openTab(FXMLLoader loader, String query, MusicController controller) {
+    private void openTab(FXMLLoader loader, String query, MusicController controller, ControllerType controllerType) {
         Tab tab;
+        String searchType = controllerType.name().equals("ALBUM") ? "Albums" : "Audio Features";
+        String tabTitle = formatTabTitle(query, searchType);
         try {
-            tab = new Tab(query, loader.load());
+            tab = new Tab(tabTitle, loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

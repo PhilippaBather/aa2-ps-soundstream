@@ -40,7 +40,6 @@ public class AlbumTask extends Task<Integer> {
 
     private String parseData(Album album) {
         return new StringBuilder()
-                .append("Album: ")
                 .append(album.getName())
                 .append(" | Total tracks: ")
                 .append(album.getTotal_tracks())
