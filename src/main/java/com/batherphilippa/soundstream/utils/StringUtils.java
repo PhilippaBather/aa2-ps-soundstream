@@ -9,14 +9,14 @@ public class StringUtils {
         return query.trim().toLowerCase().replace(" ", SPACE_ENCODING);
     }
 
-    public static String formatTrackQuery(String queryArtist, String queryTrack) {
-        String formattedArtist = formatQuery(queryArtist);
+    public static String formatTrackQuery(String queryTrack, String queryArtist) {
         String formattedTrack = formatQuery(queryTrack);
-        StringBuilder strBuilder = new StringBuilder();
-        return strBuilder
-                .append("song")
+        String formattedArtist = formatQuery(queryArtist);
+        return new StringBuilder()
+                .append("track")
                 .append(COLON_ENCODING)
                 .append(formattedTrack)
+                .append(SPACE_ENCODING)
                 .append("artist")
                 .append(COLON_ENCODING)
                 .append(formattedArtist).toString();
