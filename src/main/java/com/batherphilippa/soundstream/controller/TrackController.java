@@ -57,14 +57,14 @@ public class TrackController implements Initializable, MusicController {
         new Thread(trackTask).start();
 
         this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
-        this.filterInputTxt.requestFocus();
+        this.filterBtn.requestFocus();
     }
 
     @FXML
     private void filterList(ActionEvent event) {
         String filter = this.filterInputTxt.getText();
         this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
-        this.tracks.filtered(track -> track.contains(filter));
+        this.respListView.setItems(this.tracks.filtered((track) -> track.contains(filter)));
     }
 
     @FXML
