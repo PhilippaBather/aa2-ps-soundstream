@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Items {
 
-    private SpotifyUrl externalUrls;
+    private SpotifyUrl external_urls;
     private Followers followers;
     private List<String> genres;
     private String href;

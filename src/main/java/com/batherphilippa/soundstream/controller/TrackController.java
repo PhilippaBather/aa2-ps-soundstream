@@ -1,6 +1,8 @@
 package com.batherphilippa.soundstream.controller;
 
+import com.batherphilippa.soundstream.model.dto.TrackDTOOut;
 import com.batherphilippa.soundstream.task.TrackTask;
+import com.batherphilippa.soundstream.utils.NotificationUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.batherphilippa.soundstream.utils.Constants.PROMPT_TRACK_FILTER;
+import static com.batherphilippa.soundstream.utils.Constants.UI_NOTIFICATION_UNSELECTED_FILTER;
 import static com.batherphilippa.soundstream.utils.StringUtils.formatTrackQuery;
 
 public class TrackController implements Initializable, MusicController {
@@ -25,7 +28,7 @@ public class TrackController implements Initializable, MusicController {
     private Text titleTxt;
 
     @FXML
-    private ListView<String> respListView;
+    private ListView<TrackDTOOut> respListView;
 
     @FXML
     private TextField filterInputTxt;
@@ -37,12 +40,21 @@ public class TrackController implements Initializable, MusicController {
     private Button undoBtn;
 
     @FXML
+    private ToggleGroup filterRadBtnGroup;
+
+    @FXML
+    private RadioButton radioBtnOne;
+
+    @FXML
+    private RadioButton radioBtnTwo;
+
+    @FXML
     private ProgressIndicator progIndicator;
     private String query;
     private Tab tab;
 
     private TrackTask trackTask;
-    private ObservableList<String> tracks;
+    private ObservableList<TrackDTOOut> tracks;
 
     public TrackController(String trackQuery, String artistQuery) {
         this.query = formatTrackQuery(trackQuery, artistQuery);
@@ -59,15 +71,26 @@ public class TrackController implements Initializable, MusicController {
         this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
         this.filterBtn.requestFocus();
 
-        progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
-        progIndicator.visibleProperty().bind(this.trackTask.runningProperty());
+        this.radioBtnOne.setText("Key");
+        this.radioBtnTwo.setText("Artist (enter expression)");
+
+        this.progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        this.progIndicator.visibleProperty().bind(this.trackTask.runningProperty());
     }
 
     @FXML
     private void filterList(ActionEvent event) {
-        String filter = this.filterInputTxt.getText();
+        String filter = this.filterInputTxt.getText().toLowerCase();
         this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
-        this.respListView.setItems(this.tracks.filtered((track) -> track.contains(filter)));
+        if(radioBtnOne.isSelected()) {
+            this.respListView.setItems(this.tracks.filtered(t -> t.getKey().toLowerCase().contains(filter)));
+            this.radioBtnOne.setSelected(false); // reset btn to unselected
+        } else if (radioBtnTwo.isSelected()) {
+            this.respListView.setItems(this.tracks.filtered(t -> t.getArtist().toLowerCase().contains(filter)));
+            this.radioBtnTwo.setSelected(false); // reset btn to unselected
+        } else {
+            NotificationUtils.showAlertDialog(UI_NOTIFICATION_UNSELECTED_FILTER, Alert.AlertType.INFORMATION);
+        }
     }
 
     @FXML

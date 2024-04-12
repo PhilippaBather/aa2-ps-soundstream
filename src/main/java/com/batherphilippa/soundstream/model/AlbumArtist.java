@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlbumArtist {
-    private SpotifyUrl externalUrls;
+    private SpotifyUrl external_urls;
     private String href;
     private String id;
     private String name;

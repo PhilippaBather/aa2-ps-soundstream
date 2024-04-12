@@ -2,20 +2,19 @@ package com.batherphilippa.soundstream.task;
 
 import com.batherphilippa.soundstream.model.Track;
 import com.batherphilippa.soundstream.model.TrackAudioFeatures;
+import com.batherphilippa.soundstream.model.dto.TrackDTOOut;
 import com.batherphilippa.soundstream.service.MusicService;
 import io.reactivex.functions.Consumer;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
-import static com.batherphilippa.soundstream.utils.Constants.SEPARATOR;
-
 public class TrackTask extends Task<Integer> {
 
     private final String query;
-    private final ObservableList<String> tracks;
+    private final ObservableList<TrackDTOOut> tracks;
 
-    public TrackTask(String query, ObservableList<String> tracks) {
+    public TrackTask(String query, ObservableList<TrackDTOOut> tracks) {
         this.query = query;
         this.tracks = tracks;
     }
@@ -25,11 +24,11 @@ public class TrackTask extends Task<Integer> {
         MusicService musicService = new MusicService();
 
         Consumer<Track> consumer = (track) -> {
-            Thread.sleep(250);
+            Thread.sleep(300);
 
             Consumer<TrackAudioFeatures> consumer1 = (audioFeatures) -> {
-                Thread.sleep(250);
-                String trackData = parseData(track, audioFeatures);
+                Thread.sleep(300);
+                TrackDTOOut trackData = parseData(track, audioFeatures);
                 Platform.runLater(() -> tracks.add(trackData));
             };
 
@@ -40,27 +39,19 @@ public class TrackTask extends Task<Integer> {
         return null;
     }
 
-    private String parseData(Track track, TrackAudioFeatures audioFeatures) {
+    /**
+     * Parse Track and TrackAudioFeature objects to create a TrackDTOOut object
+     * @param track - Track object
+     * @param audioFeatures - TrackAudioFeatures
+     * @return TrackDTOOut
+     */
+    private TrackDTOOut parseData(Track track, TrackAudioFeatures audioFeatures) {
         String artistName = track.getAlbum().getArtists().get(0).getName();
         String albumName = track.getAlbum().getName();
         String key = getDominantKey(audioFeatures);
         String bpm = (int) audioFeatures.getTempo() + "bpm";
         String timeSignature = getTimeSignature(audioFeatures);
-        return new StringBuilder()
-                .append("Artist: ")
-                .append(artistName)
-                .append(SEPARATOR)
-                .append("Album: ")
-                .append(albumName)
-                .append(SEPARATOR)
-                .append("Key: ")
-                .append(key)
-                .append(SEPARATOR)
-                .append("BPM: ")
-                .append(bpm)
-                .append(SEPARATOR)
-                .append("Time Signature: ")
-                .append(timeSignature).toString();
+        return new TrackDTOOut(artistName, albumName, key, bpm, timeSignature);
     }
 
 
