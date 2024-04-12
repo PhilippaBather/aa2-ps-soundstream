@@ -1,6 +1,7 @@
 package com.batherphilippa.soundstream.task;
 
 import com.batherphilippa.soundstream.model.Album;
+import com.batherphilippa.soundstream.model.dto.AlbumDTOOut;
 import com.batherphilippa.soundstream.service.MusicService;
 import io.reactivex.functions.Consumer;
 import javafx.application.Platform;
@@ -10,9 +11,9 @@ import javafx.concurrent.Task;
 public class AlbumTask extends Task<Integer> {
 
     private final String query;
-    private ObservableList<String> albums;
+    private ObservableList<AlbumDTOOut> albums;
 
-    public AlbumTask(String query, ObservableList<String> albums) {
+    public AlbumTask(String query, ObservableList<AlbumDTOOut> albums) {
         this.query = query;
         this.albums = albums;
     }
@@ -27,8 +28,8 @@ public class AlbumTask extends Task<Integer> {
 
             Consumer<Album> consumer1 = (album) -> {
                 Thread.sleep(250);
-                String result = parseData(album);
-                Platform.runLater(() -> albums.add(result));
+                AlbumDTOOut albumDTOOut = new AlbumDTOOut(album.getName(), album.getRelease_date(), album.getTotal_tracks());
+                Platform.runLater(() -> albums.add(albumDTOOut));
             };
             musicService.getAlbumNames(id).subscribe(consumer1, Throwable::printStackTrace);
         };
@@ -39,12 +40,4 @@ public class AlbumTask extends Task<Integer> {
 
     }
 
-    private String parseData(Album album) {
-        return new StringBuilder()
-                .append(album.getName())
-                .append(" | Total tracks: ")
-                .append(album.getTotal_tracks())
-                .append(" | Released: ")
-                .append(album.getRelease_date()).toString();
-    }
 }
