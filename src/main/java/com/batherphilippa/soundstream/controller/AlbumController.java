@@ -6,15 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.batherphilippa.soundstream.utils.Constants.PROMPT_ALBUM_FILTER;
@@ -38,12 +34,13 @@ public class AlbumController implements Initializable, MusicController {
     private Button filterBtn;
     @FXML
     private Button undoBtn;
+
+    @FXML
+    private ProgressIndicator progIndicator;
     private final String query;
     private Tab tab;
 
     private AlbumTask albumTask;
-    private List<String> listCopy;
-
     private ObservableList<String> albums;
 
     public AlbumController(String query) {
@@ -60,6 +57,9 @@ public class AlbumController implements Initializable, MusicController {
 
         this.filterInputTxt.setText(PROMPT_ALBUM_FILTER);
         this.filterBtn.requestFocus();
+
+        progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        progIndicator.visibleProperty().bind(this.albumTask.runningProperty());
     }
 
     @FXML

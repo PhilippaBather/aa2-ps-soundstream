@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -38,6 +35,9 @@ public class TrackController implements Initializable, MusicController {
 
     @FXML
     private Button undoBtn;
+
+    @FXML
+    private ProgressIndicator progIndicator;
     private String query;
     private Tab tab;
 
@@ -58,6 +58,9 @@ public class TrackController implements Initializable, MusicController {
 
         this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
         this.filterBtn.requestFocus();
+
+        progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        progIndicator.visibleProperty().bind(this.trackTask.runningProperty());
     }
 
     @FXML
