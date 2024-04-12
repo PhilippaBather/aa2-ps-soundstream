@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.batherphilippa.soundstream.utils.Constants.PROMPT_TRACK_FILTER;
 import static com.batherphilippa.soundstream.utils.StringUtils.formatTrackQuery;
 
 public class TrackController implements Initializable, MusicController {
@@ -34,6 +35,9 @@ public class TrackController implements Initializable, MusicController {
 
     @FXML
     private Button filterBtn;
+
+    @FXML
+    private Button undoBtn;
     private String query;
     private Tab tab;
 
@@ -51,12 +55,23 @@ public class TrackController implements Initializable, MusicController {
         this.respListView.setItems(this.tracks);
         this.trackTask = new TrackTask(this.query, this.tracks);
         new Thread(trackTask).start();
+
+        this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
+        this.filterInputTxt.requestFocus();
     }
 
     @FXML
     private void filterList(ActionEvent event) {
-
+        String filter = this.filterInputTxt.getText();
+        this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
+        this.tracks.filtered(track -> track.contains(filter));
     }
+
+    @FXML
+    void undoAppliedFilter(ActionEvent event) {
+        this.respListView.setItems(this.tracks);
+    }
+
     @Override
     public void setTab(Tab tab) {
         this.tab = tab;
