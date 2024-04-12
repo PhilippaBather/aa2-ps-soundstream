@@ -15,4 +15,5 @@ public class Constants {
     public static final String PROMPT_TRACK_FILTER = "Filter for the track's audio features.";
     public static final String UI_NOTIFICATION_BLANK_QUERY_ARTIST = "Please enter an artist or group's name as a search term.";
     public static final String UI_NOTIFICATION_BLANK_QUERY_TRACK = "Please enter the name of the track you wish to query.";
+    public static final String UI_NOTIFICATION_UNSELECTED_FILTER = "Please select a filter option to apply a filter.";
 }
