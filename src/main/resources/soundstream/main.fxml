@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <Text layoutX="246.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SoundStream">
       <font>
          <Font size="18.0" />
@@ -19,5 +19,5 @@
    <TextField fx:id="trackTitleInput" layoutX="42.0" layoutY="121.0" prefHeight="25.0" prefWidth="166.0" text="Track name" />
    <TextField fx:id="trackArtistInput" layoutX="232.0" layoutY="121.0" prefHeight="25.0" prefWidth="179.0" text="Artist name (optional)" />
    <Button fx:id="trackSearchBtn" layoutX="426.0" layoutY="121.0" mnemonicParsing="false" onAction="#searchTrack" text="Search" />
-   <TabPane fx:id="tabPaneManager" layoutX="21.0" layoutY="157.0" prefHeight="270.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE" />
+   <TabPane fx:id="tabPaneManager" layoutX="21.0" layoutY="157.0" prefHeight="300.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE" />
 </AnchorPane>

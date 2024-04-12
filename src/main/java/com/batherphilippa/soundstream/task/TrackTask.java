@@ -47,14 +47,19 @@ public class TrackTask extends Task<Integer> {
         String bpm = (int) audioFeatures.getTempo() + "bpm";
         String timeSignature = getTimeSignature(audioFeatures);
         return new StringBuilder()
+                .append("Artist: ")
                 .append(artistName)
                 .append(SEPARATOR)
+                .append("Album: ")
                 .append(albumName)
                 .append(SEPARATOR)
+                .append("Key: ")
                 .append(key)
                 .append(SEPARATOR)
+                .append("BPM: ")
                 .append(bpm)
                 .append(SEPARATOR)
+                .append("Time Signature: ")
                 .append(timeSignature).toString();
     }
 

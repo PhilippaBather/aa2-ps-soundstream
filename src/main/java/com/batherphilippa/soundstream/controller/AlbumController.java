@@ -14,8 +14,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.batherphilippa.soundstream.utils.Constants.PROMPT_ALBUM_FILTER;
 import static com.batherphilippa.soundstream.utils.StringUtils.formatQuery;
 
 public class AlbumController implements Initializable, MusicController {
@@ -34,10 +36,13 @@ public class AlbumController implements Initializable, MusicController {
 
     @FXML
     private Button filterBtn;
+    @FXML
+    private Button undoBtn;
     private final String query;
     private Tab tab;
 
     private AlbumTask albumTask;
+    private List<String> listCopy;
 
     private ObservableList<String> albums;
 
@@ -52,13 +57,23 @@ public class AlbumController implements Initializable, MusicController {
         this.respListView.setItems(this.albums);
         this.albumTask = new AlbumTask(this.query, this.albums);
         new Thread(albumTask).start();
+
+        this.filterInputTxt.setText(PROMPT_ALBUM_FILTER);
+        this.filterBtn.requestFocus();
     }
 
     @FXML
     private void filterList(ActionEvent event) {
-
+        String filter = this.filterInputTxt.getText();
+        this.filterInputTxt.setText(PROMPT_ALBUM_FILTER);
+        this.respListView.setItems(this.albums.filtered((album) -> album.contains(filter)));
     }
 
+
+    @FXML
+    void undoAppliedFilter(ActionEvent event) {
+        this.respListView.setItems(this.albums);
+    }
 
     @Override
     public void setTab(Tab tab) {
