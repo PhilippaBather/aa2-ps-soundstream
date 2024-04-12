@@ -14,16 +14,16 @@ import java.util.List;
 @AllArgsConstructor
 public class TrackAlbum {
 
-    private String albumType;
-    private int totalTracks;
-    private List<String> availableMarkets;
-    private SpotifyUrl externalUrls;
+    private String album_type;
+    private int total_tracks;
+    private List<String> available_markets;
+    private SpotifyUrl external_urls;
     private String href;
     private String id;
     private List<Images> images;
     private String name;
-    private String releaseDate;
-    private String releaseDatePrecision;
+    private String release_date;
+    private String release_date_precision;
     private Restrictions restrictions;
     private String type;
     private String uri;

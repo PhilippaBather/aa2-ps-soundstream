@@ -15,13 +15,13 @@ import java.util.List;
 public class Track {
 
     private TrackAlbum album;
-    private List<TrackArtist> trackArtists;
-    private List<String> availableMarkets;
+    private List<TrackArtist> track_artists;
+    private List<String> available_markets;
     private int discNumber;
     private int durationMs;
     private boolean explicit;
-    private TrackExternalIds trackExternalIds;
-    private SpotifyUrl externalUrls;
+    private TrackExternalIds track_external_ids;
+    private SpotifyUrl external_urls;
     private String href;
     private String id;
     private boolean isPlayable;
@@ -29,8 +29,8 @@ public class Track {
     private Restrictions restrictions;
     private String name;
     private int popularity;
-    private String previewUrl;
-    private int trackNumber;
+    private String preview_url;
+    private int track_number;
     private String type;
     private String uri;
     private boolean isLocal;
