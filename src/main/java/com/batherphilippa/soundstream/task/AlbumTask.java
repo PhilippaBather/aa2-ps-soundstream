@@ -24,10 +24,10 @@ public class AlbumTask extends Task<Integer> {
 
         // consumer recibe los detalles del obra desde el stream y duerme para simular concurrencia
         Consumer<String> consumer = (id) -> {
-            Thread.sleep(250);
+            Thread.sleep(300);
 
             Consumer<Album> consumer1 = (album) -> {
-                Thread.sleep(250);
+                Thread.sleep(300);
                 AlbumDTOOut albumDTOOut = new AlbumDTOOut(album.getName(), album.getRelease_date(), album.getTotal_tracks());
                 Platform.runLater(() -> albums.add(albumDTOOut));
             };

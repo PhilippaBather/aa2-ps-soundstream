@@ -24,10 +24,10 @@ public class TrackTask extends Task<Integer> {
         MusicService musicService = new MusicService();
 
         Consumer<Track> consumer = (track) -> {
-            Thread.sleep(250);
+            Thread.sleep(300);
 
             Consumer<TrackAudioFeatures> consumer1 = (audioFeatures) -> {
-                Thread.sleep(250);
+                Thread.sleep(300);
                 TrackDTOOut trackData = parseData(track, audioFeatures);
                 Platform.runLater(() -> tracks.add(trackData));
             };
