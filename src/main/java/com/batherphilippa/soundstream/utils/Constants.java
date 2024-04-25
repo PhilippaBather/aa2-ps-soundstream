@@ -13,6 +13,12 @@ public class Constants {
     public static final String PROMPT_TRACK_SEARCH = "Track name";
     public static final String PROMPT_ARTIST_TRACK_SEARCH = "Artist name (optional)";
     public static final String PROMPT_TRACK_FILTER = "Filter for the track's audio features.";
+    public static final String RADIO_BTN_ALBUM_EXPRESSION = "Album Name (enter expression)";
+    public static final String RADIO_BTN_ARTIST_EXPRESSION = "Artist (enter expression)";
+    public static final String RADIO_BTN_KEY = "Key";
+    public static final String RADIO_BTN_RELEASE_YEAR = "Release Year";
+    public static final String TAB_ALBUMS = "Albums";
+    public static final String TAB_AUDIO_FEATURES = "Audio Features";
     public static final String UI_NOTIFICATION_BLANK_QUERY_ARTIST = "Please enter an artist or group's name as a search term.";
     public static final String UI_NOTIFICATION_BLANK_QUERY_TRACK = "Please enter the name of the track you wish to query.";
     public static final String UI_NOTIFICATION_UNSELECTED_FILTER = "Please select a filter option to apply a filter.";
