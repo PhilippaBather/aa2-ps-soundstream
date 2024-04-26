@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * App - punto de entrada de la aplicación que carga el recurso de main.fxml y muestra el 'stage'; extiende Application.
+ */
 public class App extends Application {
 
     @Override
