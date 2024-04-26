@@ -1,7 +1,7 @@
 package com.batherphilippa.soundstream.model;
 
 /**
- * ExternalUrls - known external URLS for an album.
+ * ExternalUrls - URLS de un álbum externas y conocidas
  */
 public class ExternalUrls {
     private SpotifyUrl external_urls;

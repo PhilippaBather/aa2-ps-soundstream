@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * TrackArtist - information about an artist who performed on the track.
+ * TrackArtist - información sobre un artista que ha salido en la canción.
  */
 @Data
 @NoArgsConstructor

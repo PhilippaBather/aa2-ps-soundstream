@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Artists - object returns an array of artists of the album.
+ * Artists - el objeto devuelve un array de artistas en un álbum.
  */
 @Data
 @NoArgsConstructor

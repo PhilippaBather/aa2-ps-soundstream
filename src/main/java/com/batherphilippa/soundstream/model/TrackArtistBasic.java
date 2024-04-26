@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * TrackArtistBasic - a simplified artist object including links to more detailed information about the artist.
+ * TrackArtistBasic - un objeto simplificado de un artista que incluye enlaces a información más detallada sobre el artista.
  */
 @Data
 @NoArgsConstructor

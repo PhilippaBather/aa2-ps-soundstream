@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ArtistSearchResults - object returned from Spotify API for a search for a specified artist.
+ * ArtistSearchResults - el objeto devuelto desde la Spotify API por una búsqueda para un artista.
  */
 @Data
 @NoArgsConstructor

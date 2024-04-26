@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Album - information about a specified artist's album.
+ * Album - información sobre un álbum de un artista.
  */
 @Data
 @NoArgsConstructor

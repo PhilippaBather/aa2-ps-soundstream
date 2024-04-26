@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Track - detailed information about the track object.
+ * Track - información detallada sobre el objeto Track (canción).
  */
 @Data
 @NoArgsConstructor

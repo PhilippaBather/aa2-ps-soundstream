@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Images - defines the album cover art.
+ * Images - define el arte de la tapa de un álbum.
  */
 @Data
 @NoArgsConstructor

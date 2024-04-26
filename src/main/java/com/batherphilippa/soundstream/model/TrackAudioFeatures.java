@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * TrackAudioFeatures - audio features of a track object.
+ * TrackAudioFeatures - las características de audio de un objeto Track (la canción).
  */
 @Data
 @NoArgsConstructor

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * SpotifyUrl - known external URLs.
+ * SpotifyUrl - URLS externas y conocidas.
  */
 @Data
 @NoArgsConstructor
