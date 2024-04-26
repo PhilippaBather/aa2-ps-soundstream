@@ -87,8 +87,8 @@ public class TrackTask extends Task<Integer> {
             default -> throw new IllegalStateException("Unexpected value: " + audioFeatures.getKey());
         };
 
-        // 0 reprsenta la clave mayor; 1 la clave menor
-        return key.concat(audioFeatures.getMode() == 0 ? " maj" : " min");
+        // 0 reprsenta la clave menor; 1 la clave mayor
+        return key.concat(audioFeatures.getMode() == 0 ? " min" : " maj");
     }
 
     /**
