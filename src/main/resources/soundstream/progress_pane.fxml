@@ -23,5 +23,6 @@
       </RadioButton>
       <RadioButton fx:id="radioBtnTwo" layoutX="149.0" layoutY="258.0" mnemonicParsing="false" toggleGroup="$filterRadBtnGroup" />
       <ImageView fx:id="imgView" fitHeight="250.0" fitWidth="250.0" layoutX="574.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="txtNotification" layoutX="14.0" layoutY="10.0" />
    </children>
 </AnchorPane>
