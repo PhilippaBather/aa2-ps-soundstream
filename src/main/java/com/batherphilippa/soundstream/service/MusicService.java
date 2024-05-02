@@ -50,10 +50,11 @@ public class MusicService {
     /**
      * Realiza la petición Fetch por llamar la interfaz MusicAPI para obtener el identificador de un artista.
      * Se necesita el identificador para realizar la petición sobre albumes de un artista.
+     *
      * @param q - la consulta
      * @return Observable de tipo cadena que representa el identificador del artista.
      */
-    public Observable<String> getArtist(String q) {
+    public Observable<Items> getArtist(String q) {
         // tipo de petición
         String type = SPOTIFY_SEARCH_REQUEST_TYPE_ARTIST;
         // obtener el Token
@@ -61,12 +62,13 @@ public class MusicService {
         return this.musicAPI.getArtists(auth, q, type, 1, 0)
                 .map(ArtistSearchResult::getArtists)
                 .map(Artists::getItems)
-                .flatMapIterable(items -> items)
-                .map(Items::getId);
+                .flatMapIterable(items -> items);
     }
+
 
     /**
      * Realiza la petición Fetch por llamar a la interfaz MusicAPI para obtener los albumes de un artista.
+     *
      * @param id - el identificador del artista
      * @return Observable de tipo Album
      */
@@ -80,6 +82,7 @@ public class MusicService {
 
     /**
      * Realiza la petición Fetch por llamar a la interfaz MusicAPI para obtener una canción.
+     *
      * @param q - la consulta (nombre de una cancíon)
      * @return Observable de tipo Track
      */
@@ -94,6 +97,7 @@ public class MusicService {
     /**
      * Realiza la petición Fetch por llamar a la interfaza MusicAPI para obtener las características de audio de una
      * canción.
+     *
      * @param trackId - el identificador de una canción
      * @return Observable de tipo TrackAudioFeatures
      */
