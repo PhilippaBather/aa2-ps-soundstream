@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -54,6 +56,10 @@ public class TrackController implements Initializable, MusicController {
 
     @FXML
     private ProgressIndicator progIndicator;
+
+    @FXML
+    private ImageView imgView;
+
     private final String query;
     private Tab tab;
 
@@ -85,6 +91,9 @@ public class TrackController implements Initializable, MusicController {
         // establece el throbber (ícono de carga) y vincluralo al Task
         this.progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
         this.progIndicator.visibleProperty().bind(this.trackTask.runningProperty());
+
+        // carga el imagen cuando el Task ha terminado
+        renderImageOnTaskSucceeded();
     }
 
     @FXML
@@ -116,6 +125,17 @@ public class TrackController implements Initializable, MusicController {
     void undoAppliedFilter(ActionEvent event) {
         this.respListView.setItems(this.tracks);
     }
+
+    /**
+     * Establece y pinta el imagén del primer álbum en la lista cuando el Task ha terminado con éxito.
+     */
+    private void renderImageOnTaskSucceeded() {
+        trackTask.setOnSucceeded(event -> {
+            String imgURL = tracks.get(0).getImgURL();
+            imgView.setImage(new Image(imgURL));
+        });
+    }
+
 
     /**
      * Crea el tab; si el Task está en marcha, cuando el tab está cerrado, el Task será terminado.
