@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -53,11 +55,15 @@ public class AlbumController implements Initializable, MusicController {
 
     @FXML
     private ProgressIndicator progIndicator;
+
+    @FXML
+    private ImageView imgView;
     private final String query;
     private Tab tab;
 
     private AlbumTask albumTask;
     private ObservableList<AlbumDTOOut> albums;
+    private ObservableList<String> urlHref;
 
     public AlbumController(String query) {
         this.query = formatQuery(query);  // formatea la cadena
@@ -68,11 +74,12 @@ public class AlbumController implements Initializable, MusicController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // crea un Observable Array List que puede refleja cambios/actualizaciones
         this.albums = FXCollections.observableArrayList();
+        this.urlHref = FXCollections.observableArrayList();
         // vincula el Observable Array List a la ListView que está pintado en la aplicación
         this.respListView.setItems(this.albums);
 
         // crea y empieza el Task
-        this.albumTask = new AlbumTask(this.query, this.albums);
+        this.albumTask = new AlbumTask(this.query, this.albums, this.urlHref);
         new Thread(albumTask).start();
 
         // establece el texto y botones de radio para los filtros
@@ -84,10 +91,14 @@ public class AlbumController implements Initializable, MusicController {
         // establece el throbber (ícono de carga) y vincluralo al Task
         this.progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
         this.progIndicator.visibleProperty().bind(this.albumTask.runningProperty());
+
+        // carga el imagen cuando el Task ha terminado
+        renderImageOnTaskSucceeded();
     }
 
     /**
      * Filtra la lista de resultados según el filtro seleccionado y la condición dado.
+     *
      * @param event - filtar
      */
     @FXML
@@ -99,10 +110,10 @@ public class AlbumController implements Initializable, MusicController {
 
         // filta la vista de listado de respuestas según el filtro selecionado y la condición
         // método filtered() no modifica la lista permanente
-        if(radioBtnOne.isSelected()) {
+        if (radioBtnOne.isSelected()) {
             this.respListView.setItems(this.albums.filtered(a -> a.getRelease_date().contains(filter)));
             radioBtnOne.setSelected(false);  // re-establece el botón a no seleccionado
-        } else if (radioBtnTwo.isSelected()){
+        } else if (radioBtnTwo.isSelected()) {
             this.respListView.setItems(this.albums.filtered(a -> a.getName().toLowerCase().contains(filter)));
             radioBtnTwo.setSelected(false);   // re-establece el botón a no seleccionado
         } else {
@@ -113,6 +124,7 @@ public class AlbumController implements Initializable, MusicController {
 
     /**
      * Resetablece la lista con los álbums sin filtro
+     *
      * @param event - deshacer un filtro
      */
     @FXML
@@ -121,7 +133,18 @@ public class AlbumController implements Initializable, MusicController {
     }
 
     /**
+     * Establece y pinta el imagén cuando el Task ha terminado con éxito.
+     */
+    private void renderImageOnTaskSucceeded() {
+        albumTask.setOnSucceeded(event -> {
+            String imgURL = albums.get(0).getImgURL();
+            imgView.setImage(new Image(imgURL));
+        });
+    }
+
+    /**
      * Crea el tab; si el Task está en marcha, cuando el tab está cerrado, el Task será terminado.
+     *
      * @param tab - pestaña que contiene los resultados de una busqueda
      */
     @Override
@@ -129,4 +152,5 @@ public class AlbumController implements Initializable, MusicController {
         this.tab = tab;
         tab.setOnClosed(e -> this.albumTask.cancel());
     }
+
 }
