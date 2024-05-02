@@ -14,6 +14,7 @@ public class AlbumDTOOut {
     private String name;
     private String release_date;
     private int total_tracks;
+    private String imgURL;
 
     @Override
     public String toString() {
