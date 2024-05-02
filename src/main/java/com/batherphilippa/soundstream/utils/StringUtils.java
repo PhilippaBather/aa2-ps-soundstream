@@ -14,7 +14,7 @@ public class StringUtils {
      * @return una cadena formateado.
      */
     public static String formatQuery(String query) {
-        return query.trim().toLowerCase().concat(SPOTIFY_TYPE_ARTIST);
+        return query.trim().toLowerCase();
     }
 
     /**
