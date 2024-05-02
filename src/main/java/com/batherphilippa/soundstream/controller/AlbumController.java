@@ -63,7 +63,6 @@ public class AlbumController implements Initializable, MusicController {
 
     private AlbumTask albumTask;
     private ObservableList<AlbumDTOOut> albums;
-    private ObservableList<String> urlHref;
 
     public AlbumController(String query) {
         this.query = formatQuery(query);  // formatea la cadena
@@ -74,12 +73,11 @@ public class AlbumController implements Initializable, MusicController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // crea un Observable Array List que puede refleja cambios/actualizaciones
         this.albums = FXCollections.observableArrayList();
-        this.urlHref = FXCollections.observableArrayList();
         // vincula el Observable Array List a la ListView que está pintado en la aplicación
         this.respListView.setItems(this.albums);
 
         // crea y empieza el Task
-        this.albumTask = new AlbumTask(this.query, this.albums, this.urlHref);
+        this.albumTask = new AlbumTask(this.query, this.albums);
         new Thread(albumTask).start();
 
         // establece el texto y botones de radio para los filtros
