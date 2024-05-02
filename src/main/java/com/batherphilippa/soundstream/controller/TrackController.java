@@ -31,6 +31,9 @@ public class TrackController implements Initializable, MusicController {
     private AnchorPane responsePane;
 
     @FXML
+    private TextField txtNotification;
+
+    @FXML
     private Text titleTxt;
 
     @FXML
@@ -84,15 +87,7 @@ public class TrackController implements Initializable, MusicController {
 
         initializeUIFeatures();
         initializeThrobber();
-
-        // carga el imagen cuando el Task ha terminado
-        renderImageOnTaskSucceeded();
-
-        trackTask.setOnSucceeded(event -> {
-            if (respListView.getItems().size() == 0) {
-                System.out.println("LIST VIEW NULL");
-            }
-        });
+        initializeOnSucceededActions();
     }
 
     /**
@@ -119,6 +114,7 @@ public class TrackController implements Initializable, MusicController {
         this.filterBtn.requestFocus();
         this.radioBtnOne.setText(RADIO_BTN_KEY);
         this.radioBtnTwo.setText(RADIO_BTN_ARTIST_EXPRESSION);
+        this.txtNotification.setVisible(false);
     }
 
     /**
@@ -127,6 +123,38 @@ public class TrackController implements Initializable, MusicController {
     private void initializeThrobber() {
         this.progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
         this.progIndicator.visibleProperty().bind(this.trackTask.runningProperty());
+    }
+
+    /**
+     * Inicializa las acciones para actualizar cuando el task ha terminado con éxito.
+     */
+    private void initializeOnSucceededActions() {
+        trackTask.setOnSucceeded(event -> {
+            handleNoRecords();
+            renderDefaultImage();
+        });
+    }
+
+    /**
+     * Muestra el text field de notificación para informar al usuario si no campos están encontrados.
+     */
+    private void handleNoRecords() {
+        if (respListView.getItems().size() == 0) {
+            txtNotification.setVisible(true);
+            txtNotification.setText("No records found.");
+            txtNotification.setStyle("-fx-background-color: #f0ffff; -fx-text-fill: red; -fx-border-color: red;");
+        }
+    }
+
+    /**
+     * Establece y pinta el imagén del primer álbum en la lista cuando el Task ha terminado con éxito y si un ítem
+     * en la lista está seleccionado.
+     */
+    private void renderDefaultImage() {
+        if (respListView.getSelectionModel().getSelectedItem() == null) {
+            String imgURL = tracks.get(0).getImgURL();
+            imgView.setImage(new Image(imgURL));
+        }
     }
 
     @FXML
@@ -138,7 +166,7 @@ public class TrackController implements Initializable, MusicController {
 
         // filta la vista de listado de respuestas según el filtro selecionado y la condición
         // método filtered() no modifica la lista permanente
-        if(radioBtnOne.isSelected()) {
+        if (radioBtnOne.isSelected()) {
             this.respListView.setItems(this.tracks.filtered(t -> t.getKey().toLowerCase().contains(filter)));
             this.radioBtnOne.setSelected(false);  // re-establece el botón a no seleccionado
         } else if (radioBtnTwo.isSelected()) {
@@ -152,6 +180,7 @@ public class TrackController implements Initializable, MusicController {
 
     /**
      * Resetablece la lista con los álbums sin filtro
+     *
      * @param event - deshacer un filtro
      */
     @FXML
@@ -160,21 +189,8 @@ public class TrackController implements Initializable, MusicController {
     }
 
     /**
-     * Establece y pinta el imagén del primer álbum en la lista cuando el Task ha terminado con éxito y si un ítem
-     * en la lista está seleccionado.
-     */
-    private void renderImageOnTaskSucceeded() {
-        trackTask.setOnSucceeded(event -> {
-            if (respListView.getSelectionModel().getSelectedItem() == null) {
-                String imgURL = tracks.get(0).getImgURL();
-                imgView.setImage(new Image(imgURL));
-            }
-        });
-    }
-
-
-    /**
      * Crea el tab; si el Task está en marcha, cuando el tab está cerrado, el Task será terminado.
+     *
      * @param tab - pestaña que contiene los resultados de una busqueda
      */
     @Override

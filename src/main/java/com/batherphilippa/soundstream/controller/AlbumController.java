@@ -31,6 +31,9 @@ public class AlbumController implements Initializable, MusicController {
     private AnchorPane responsePane;
 
     @FXML
+    private TextField txtNotification;
+
+    @FXML
     private Text titleTxt;
 
     @FXML
@@ -81,18 +84,62 @@ public class AlbumController implements Initializable, MusicController {
         this.albumTask = new AlbumTask(this.query, this.albums);
         new Thread(albumTask).start();
 
+        initializeUIFeatures();
+        initializeThrobber();
+        initializeOnSucceededActions();
+    }
+
+    /**
+     * Establece los textos y botones de radio para los filtros.
+     */
+    private void initializeUIFeatures() {
         // establece el texto y botones de radio para los filtros
         this.filterInputTxt.setText(PROMPT_ALBUM_FILTER);
         this.filterBtn.requestFocus();
         this.radioBtnOne.setText(RADIO_BTN_RELEASE_YEAR);
         this.radioBtnTwo.setText(RADIO_BTN_ALBUM_EXPRESSION);
+        this.txtNotification.setVisible(false);
+    }
 
+    /**
+     * Establece el throbber (ícono de carga) y vincluralo al Task
+     */
+    private void initializeThrobber() {
         // establece el throbber (ícono de carga) y vincluralo al Task
         this.progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
         this.progIndicator.visibleProperty().bind(this.albumTask.runningProperty());
+    }
 
-        // carga el imagen cuando el Task ha terminado
-        renderImageOnTaskSucceeded();
+    /**
+     * Inicializa las acciones para actualizar cuando el task ha terminado con éxito.
+     */
+    private void initializeOnSucceededActions() {
+        albumTask.setOnSucceeded(event -> {
+            handleNoRecords();
+            renderDefaultImage();
+        });
+    }
+
+    /**
+     * Muestra el text field de notificación para informar al usuario si no campos están encontrados.
+     */
+    private void handleNoRecords() {
+        if (respListView.getItems().size() == 0) {
+            txtNotification.setVisible(true);
+            txtNotification.setText("No records found.");
+            txtNotification.setStyle("-fx-background-color: #f0ffff; -fx-text-fill: red; -fx-border-color: red;");
+        }
+    }
+
+    /**
+     * Establece y pinta el imagén del primer álbum en la lista cuando el Task ha terminado con éxito y si un ítem
+     * en la lista está seleccionado.
+     */
+    private void renderDefaultImage() {
+        if (respListView.getSelectionModel().getSelectedItem() == null) {
+            String imgURL = albums.get(0).getImgURL();
+            imgView.setImage(new Image(imgURL));
+        }
     }
 
     /**
@@ -136,6 +183,7 @@ public class AlbumController implements Initializable, MusicController {
      */
     private void renderImageOnTaskSucceeded() {
         albumTask.setOnSucceeded(event -> {
+            System.out.println("IMAGE URL: " + albums.get(0).getImgURL());
             String imgURL = albums.get(0).getImgURL();
             imgView.setImage(new Image(imgURL));
         });
