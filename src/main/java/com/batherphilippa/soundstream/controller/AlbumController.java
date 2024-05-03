@@ -3,6 +3,7 @@ package com.batherphilippa.soundstream.controller;
 import com.batherphilippa.soundstream.model.dto.AlbumDTOOut;
 import com.batherphilippa.soundstream.task.AlbumTask;
 import com.batherphilippa.soundstream.utils.NotificationUtils;
+import com.opencsv.CSVWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +15,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.batherphilippa.soundstream.utils.Constants.*;
-import static com.batherphilippa.soundstream.utils.StringUtils.formatQuery;
+import static com.batherphilippa.soundstream.utils.NotificationUtils.showAlertDialog;
+import static com.batherphilippa.soundstream.utils.NotificationUtils.showFileDirectoryChooser;
+import static com.batherphilippa.soundstream.utils.StringUtils.*;
 
 /**
  * AlbumnController - controlador para manejar el Task de un busqueda para un álbum, listar los resultados
@@ -62,6 +67,9 @@ public class AlbumController implements Initializable, MusicController {
     @FXML
     private ImageView imgView;
 
+    @FXML
+    private Button btnCSV;
+
     private final String query;
     private Tab tab;
 
@@ -99,6 +107,7 @@ public class AlbumController implements Initializable, MusicController {
         this.radioBtnOne.setText(RADIO_BTN_RELEASE_YEAR);
         this.radioBtnTwo.setText(RADIO_BTN_ALBUM_EXPRESSION);
         this.txtNotification.setVisible(false);
+        this.btnCSV.setDisable(true);
     }
 
     /**
@@ -117,6 +126,7 @@ public class AlbumController implements Initializable, MusicController {
         albumTask.setOnSucceeded(event -> {
             handleNoRecords();
             renderDefaultImage();
+            this.btnCSV.setDisable(false);
         });
     }
 
@@ -187,6 +197,42 @@ public class AlbumController implements Initializable, MusicController {
             String imgURL = albums.get(0).getImgURL();
             imgView.setImage(new Image(imgURL));
         });
+    }
+
+    /**
+     * Maneja escribir los registros a un archivo CSV.  Para guardar el archivo, el usuario debe elegir un directorio
+     * desde el Directory Chooser; el nombre del archivo está formateado para reflejar la consulta introducida por el
+     * usuario y el tipo de Álbum.
+     * @param event - botón pulsado
+     * @throws IOException
+     */
+    @FXML
+    void handleWriteDataToCSV(ActionEvent event) {
+        // formatea el nombre del archivo
+        String filename = formatCSVFilename(this.query, TAB_ALBUMS);
+        String dir = showFileDirectoryChooser(btnCSV);
+
+        String path;
+        if (dir != null) {
+            path = dir.concat(filename);
+            try (CSVWriter writer = new CSVWriter(new FileWriter(path))) {
+                // define la cabecera
+                String[] header = {CSV_HEADER_ARTIST, CSV_HEADER_ALBUM, CSV_HEADER_RELEASE_DATE, CSV_NUM_TRACKS};
+                writer.writeNext(header);
+                String artist = formatArtistName(this.query);
+
+                // escribe los registros
+                for (AlbumDTOOut album : albums) {
+                    // formatado para prevenir la conversión automática a una fecha en Excel; resultado guardado por e.j. "4/4"
+                    String[] record = {artist, album.getName(), album.getRelease_date(), String.valueOf(album.getTotal_tracks())};
+                    writer.writeNext(record);
+                }
+                showAlertDialog("CSV file " + filename + " saved in directory " + dir, Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                showAlertDialog(UI_NOTIFICATION_ERROR_WRITING_TO_CSV, Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
