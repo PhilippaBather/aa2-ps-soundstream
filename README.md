@@ -9,4 +9,4 @@
 
 ### The application uses Retrofit and RXJava.  It connects to the Spotify API using OAuth.
 
-### The project is the submission for the subject Procesos y Servicios ('Processes and Services') for the Spanish FP Grado Superior in Desarrollo de Aplicaciones Multiplataforma (Multiplatform Application Development).
+#### The project is the submission for the subject Procesos y Servicios ('Processes and Services') for the Spanish FP Grado Superior in Desarrollo de Aplicaciones Multiplataforma (Multiplatform Application Development).
