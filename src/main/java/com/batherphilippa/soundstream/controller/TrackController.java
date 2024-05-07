@@ -181,7 +181,8 @@ public class TrackController extends Component implements Initializable, MusicCo
         // filta la vista de listado de respuestas según el filtro selecionado y la condición
         // método filtered() no modifica la lista permanente
         if (radioBtnOne.isSelected()) {
-            this.respListView.setItems(this.tracks.filtered(t -> t.getKey().toLowerCase().contains(filter)));
+            // starts with - para evitar todos claves desafinados devueltos si el usuario busca para la clave 'B'
+            this.respListView.setItems(this.tracks.filtered(t -> t.getKey().toLowerCase().startsWith(filter)));
             this.radioBtnOne.setSelected(false);  // re-establece el botón a no seleccionado
         } else if (radioBtnTwo.isSelected()) {
             this.respListView.setItems(this.tracks.filtered(t -> t.getArtist().toLowerCase().contains(filter)));
@@ -220,14 +221,14 @@ public class TrackController extends Component implements Initializable, MusicCo
             path = dir.concat(filename);
             try (CSVWriter writer = new CSVWriter(new FileWriter(path))) {
                 // define la cabecera
-                String[] header = {CSV_HEADER_ARTIST, CSV_HEADER_ALBUM, CSV_HEADER_KEY, CSV_HEADER_BPM, CSV_HEADER_TIME_SIGNATURE};
+                String[] header = {CSV_HEADER_ARTIST, CSV_HEADER_ALBUM, CSV_HEADER_TRACK, CSV_HEADER_KEY, CSV_HEADER_BPM, CSV_HEADER_TIME_SIGNATURE};
                 writer.writeNext(header);
 
                 // escribe los registros
                 for (TrackDTOOut track : tracks) {
                     // formatado para prevenir la conversión automática a una fecha en Excel; resultado guardado por e.j. "4/4"
                     String timeSig = "\" " + track.getTimeSignature() + " \" ";
-                    String[] record = {track.getArtist(), track.getAlbum(), track.getKey(), track.getBpm(), timeSig};
+                    String[] record = {track.getArtist(), track.getAlbum(), track.getTrack(), track.getKey(), track.getBpm(), timeSig};
                     writer.writeNext(record);
                 }
                 showAlertDialog("CSV file " + filename + " saved in directory " + dir, Alert.AlertType.INFORMATION);

@@ -39,6 +39,7 @@ public class Constants {
     // constantes del archivo CSV
     public static final String CSV_HEADER_ARTIST = "Artist";
     public static final String CSV_HEADER_ALBUM = "Album";
+    public static final String CSV_HEADER_TRACK = "Track";
     public static final String CSV_HEADER_KEY = "Key";
     public static final String CSV_HEADER_BPM = "BPM";
     public static final String CSV_HEADER_TIME_SIGNATURE = "Time Signature";
