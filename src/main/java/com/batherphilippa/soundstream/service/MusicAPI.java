@@ -4,6 +4,9 @@ import com.batherphilippa.soundstream.model.*;
 import io.reactivex.Observable;
 import retrofit2.http.*;
 
+/**
+ * MusicAPI - la interfaz que define los 'requests' a la API.
+ */
 public interface MusicAPI {
 
     @FormUrlEncoded
