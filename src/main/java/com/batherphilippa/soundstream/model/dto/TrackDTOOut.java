@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TrackDTOOut {
     private String artist;
+    private String track;
     private String album;
     private String key;
     private String bpm;
@@ -22,6 +23,7 @@ public class TrackDTOOut {
     public String toString() {
         return artist + " | " +
                 "Album: " + album + " | " +
+                "Track: " + track + " | " +
                 "Key: " + key + " | " +
                 "BPM: " + bpm + " | " +
                 "Time Signature: " + timeSignature;
