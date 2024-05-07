@@ -1,8 +1,8 @@
 # aa2-ps-soundstream
 
-## A reactive JavaFX desktop application that connects to the Spotify API to:
+## A reactive JavaFX desktop application that connects to the Spotify API to allow users to:
 ## - Search for an artist's albums
-## - Identify the dominant key and bpm of a track
+## - Explore a song's audio features: dominant key, bpm and time signature
 
 ## The application uses Retrofit and RXJava.
 

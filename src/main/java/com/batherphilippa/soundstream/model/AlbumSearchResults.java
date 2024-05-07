@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * AlbumSearchResults - object returned from the Spotify API for a search for a given artist's albums.
+ * AlbumSearchResults - el objeto devuelto desde la Sportify API por una búsqueda para los albumes de un artista.
  */
 @Data
 @NoArgsConstructor

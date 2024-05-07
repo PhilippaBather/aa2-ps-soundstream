@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * TrackExternalIds - known external Ids for a track
+ * TrackExternalIds - identificadores externos y conocidos de una canción
  */
 @Data
 @NoArgsConstructor

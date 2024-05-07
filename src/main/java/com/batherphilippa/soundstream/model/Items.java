@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Items - artist object; an item is an object within the array of artists in the Artists class.
+ * Items - el objeto de un artista; un ítem es un objeto dentro el array de artistas en la clase Artists.
  */
 @Data
 @NoArgsConstructor

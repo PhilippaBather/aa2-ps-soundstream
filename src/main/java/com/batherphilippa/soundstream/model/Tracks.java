@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Tracks - a list of tracks returned matching the track name queried.
+ * Tracks - una lista de canciones devuelta que corresponde a el nombre de la canción consultado.
  */
 @Data
 @NoArgsConstructor

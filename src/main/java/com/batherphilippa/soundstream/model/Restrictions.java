@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Restrictions - restrictions applied to the album.  Allowed values: "market", "product", and "explicit".
+ * Restrictions -las restricciones aplicadas a un álbum.  Valores permitidos: "market", "product", and "explicit".
  */
 @Data
 @NoArgsConstructor

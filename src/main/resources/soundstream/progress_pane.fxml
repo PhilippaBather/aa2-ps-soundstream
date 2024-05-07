@@ -6,20 +6,24 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="responsePane" prefHeight="290.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="responsePane" prefHeight="290.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="respListView" layoutX="15.0" layoutY="25.0" prefHeight="192.0" prefWidth="514.0" />
       <TextField fx:id="filterInputTxt" layoutX="16.0" layoutY="226.0" prefHeight="25.0" prefWidth="303.0" />
       <Button fx:id="filterBtn" layoutX="333.0" layoutY="226.0" mnemonicParsing="false" onAction="#filterList" text="Filter" />
       <Button fx:id="undoBtn" layoutX="389.0" layoutY="226.0" mnemonicParsing="false" onAction="#undoAppliedFilter" text="Undo" />
       <ProgressIndicator fx:id="progIndicator" layoutX="468.0" layoutY="229.0" progress="0.0" />
-      <RadioButton fx:id="radioBtnOne" layoutX="16.0" layoutY="258.0" mnemonicParsing="false" >
+      <RadioButton fx:id="radioBtnOne" layoutX="16.0" layoutY="258.0" mnemonicParsing="false">
          <toggleGroup>
             <ToggleGroup fx:id="filterRadBtnGroup" />
          </toggleGroup>
       </RadioButton>
       <RadioButton fx:id="radioBtnTwo" layoutX="149.0" layoutY="258.0" mnemonicParsing="false" toggleGroup="$filterRadBtnGroup" />
+      <ImageView fx:id="imgView" fitHeight="247.0" fitWidth="250.0" layoutX="575.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="txtNotification" layoutX="14.0" layoutY="10.0" />
+      <Button fx:id="btnCSV" layoutX="575.0" layoutY="273.0" mnemonicParsing="false" onAction="#handleWriteDataToCSV" prefHeight="30.0" prefWidth="141.0" text="Export Records to CSV" />
    </children>
 </AnchorPane>

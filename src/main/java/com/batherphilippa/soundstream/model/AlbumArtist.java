@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * AlbumArtist - information about an artist who has appeared on an album.
+ * AlbumArtist - información sobre un artista que ha salido en un álbum.
  */
 @Data
 @NoArgsConstructor
