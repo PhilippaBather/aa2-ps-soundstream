@@ -31,6 +31,9 @@ public class TrackController implements Initializable, MusicController {
     private AnchorPane responsePane;
 
     @FXML
+    private TextField txtNotification;
+
+    @FXML
     private Text titleTxt;
 
     @FXML
@@ -73,27 +76,85 @@ public class TrackController implements Initializable, MusicController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // crea un Observable Array List que puede refleja cambios/actualizaciones
+        // crea un Observable Array List que puede reflejar cambios/actualizaciones
         this.tracks = FXCollections.observableArrayList();
-        // vincula el Observable Array List a la ListView que está pintado en la aplicación
-        this.respListView.setItems(this.tracks);
+
+        initializeListView();
 
         // crea y empieza el Task
         this.trackTask = new TrackTask(this.query, this.tracks);
         new Thread(trackTask).start();
 
-        // establece el texto y botones de radio para los filtros
+        initializeUIFeatures();
+        initializeThrobber();
+        initializeOnSucceededActions();
+    }
+
+    /**
+     * Inicializa la vista de la lista
+     */
+    private void initializeListView() {
+        // vincula el Observable Array List a la ListView que está pintado en la aplicación
+        this.respListView.setItems(this.tracks);
+        // establece el modo de selección
+        this.respListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        // añade un listener para cambiar el imagén de un álbum depende del campo seleccionado
+        this.respListView.getSelectionModel().selectedItemProperty().addListener(((observableValue, trackDTOOut, t1) -> {
+            String imgURL = t1.getImgURL();
+            imgView.setImage(new Image(imgURL));
+        }));
+
+    }
+
+    /**
+     * Establece los textos y botones de radio para los filtros.
+     */
+    private void initializeUIFeatures() {
         this.filterInputTxt.setText(PROMPT_TRACK_FILTER);
         this.filterBtn.requestFocus();
         this.radioBtnOne.setText(RADIO_BTN_KEY);
         this.radioBtnTwo.setText(RADIO_BTN_ARTIST_EXPRESSION);
+        this.txtNotification.setVisible(false);
+    }
 
-        // establece el throbber (ícono de carga) y vincluralo al Task
+    /**
+     * Establece el throbber (ícono de carga) y vincluralo al Task
+     */
+    private void initializeThrobber() {
         this.progIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
         this.progIndicator.visibleProperty().bind(this.trackTask.runningProperty());
+    }
 
-        // carga el imagen cuando el Task ha terminado
-        renderImageOnTaskSucceeded();
+    /**
+     * Inicializa las acciones para actualizar cuando el task ha terminado con éxito.
+     */
+    private void initializeOnSucceededActions() {
+        trackTask.setOnSucceeded(event -> {
+            handleNoRecords();
+            renderDefaultImage();
+        });
+    }
+
+    /**
+     * Muestra el text field de notificación para informar al usuario si no campos están encontrados.
+     */
+    private void handleNoRecords() {
+        if (respListView.getItems().size() == 0) {
+            txtNotification.setVisible(true);
+            txtNotification.setText("No records found.");
+            txtNotification.setStyle("-fx-background-color: #f0ffff; -fx-text-fill: red; -fx-border-color: red;");
+        }
+    }
+
+    /**
+     * Establece y pinta el imagén del primer álbum en la lista cuando el Task ha terminado con éxito y si un ítem
+     * en la lista está seleccionado.
+     */
+    private void renderDefaultImage() {
+        if (respListView.getSelectionModel().getSelectedItem() == null) {
+            String imgURL = tracks.get(0).getImgURL();
+            imgView.setImage(new Image(imgURL));
+        }
     }
 
     @FXML
@@ -105,7 +166,7 @@ public class TrackController implements Initializable, MusicController {
 
         // filta la vista de listado de respuestas según el filtro selecionado y la condición
         // método filtered() no modifica la lista permanente
-        if(radioBtnOne.isSelected()) {
+        if (radioBtnOne.isSelected()) {
             this.respListView.setItems(this.tracks.filtered(t -> t.getKey().toLowerCase().contains(filter)));
             this.radioBtnOne.setSelected(false);  // re-establece el botón a no seleccionado
         } else if (radioBtnTwo.isSelected()) {
@@ -119,6 +180,7 @@ public class TrackController implements Initializable, MusicController {
 
     /**
      * Resetablece la lista con los álbums sin filtro
+     *
      * @param event - deshacer un filtro
      */
     @FXML
@@ -127,18 +189,8 @@ public class TrackController implements Initializable, MusicController {
     }
 
     /**
-     * Establece y pinta el imagén del primer álbum en la lista cuando el Task ha terminado con éxito.
-     */
-    private void renderImageOnTaskSucceeded() {
-        trackTask.setOnSucceeded(event -> {
-            String imgURL = tracks.get(0).getImgURL();
-            imgView.setImage(new Image(imgURL));
-        });
-    }
-
-
-    /**
      * Crea el tab; si el Task está en marcha, cuando el tab está cerrado, el Task será terminado.
+     *
      * @param tab - pestaña que contiene los resultados de una busqueda
      */
     @Override

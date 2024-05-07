@@ -60,11 +60,19 @@ public class StringUtils {
         String[] queryWords = query.trim().toLowerCase().split(" ");
         // crea un array del tamaño de queryWords
         String[] formattedWords = new String[queryWords.length];
+
         for (int i = 0; i < queryWords.length; i++) {
             // pasa al array los elementos del array queryWords formateados
             formattedWords[i] = queryWords[i].substring(0, 1).toUpperCase() + queryWords[i].substring(1);
         }
-        // re-concatena las palabras formateadas y añade el posesivo
-        return String.join(" ", formattedWords).concat("'s ").concat(searchType);
+
+        // re-concatena las palabras formateadas y añade el posesivo correcto depende de la última letra
+        String finalWord = formattedWords[formattedWords.length - 1];
+        char finalLetter = finalWord.charAt(finalWord.length() - 1);
+        if (finalLetter == 's' | finalLetter == 'x') {
+            return String.join(" ", formattedWords).concat("' ").concat(searchType);
+        } else {
+            return String.join(" ", formattedWords).concat("'s ").concat(searchType);
+        }
     }
 }
