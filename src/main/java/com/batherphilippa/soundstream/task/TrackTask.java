@@ -58,13 +58,14 @@ public class TrackTask extends Task<Integer> {
     private TrackDTOOut parseData(Track track, TrackAudioFeatures audioFeatures, String imgUrl) {
         String artistName = track.getAlbum().getArtists().get(0).getName();
         String albumName = track.getAlbum().getName();
+        String trackName = track.getName();
         // clave musical
         String key = getDominantKey(audioFeatures);
         // bpm ('beats per minute'): pulsos por minuto
         String bpm = (int) audioFeatures.getTempo() + "bpm";
         // signatura de compás
         String timeSignature = getTimeSignature(audioFeatures);
-        return new TrackDTOOut(artistName, albumName, key, bpm, timeSignature, imgUrl);
+        return new TrackDTOOut(artistName, trackName, albumName, key, bpm, timeSignature, imgUrl);
     }
 
 
