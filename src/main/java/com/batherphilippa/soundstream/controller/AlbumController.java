@@ -58,6 +58,7 @@ public class AlbumController implements Initializable, MusicController {
 
     @FXML
     private ImageView imgView;
+
     private final String query;
     private Tab tab;
 
@@ -131,7 +132,7 @@ public class AlbumController implements Initializable, MusicController {
     }
 
     /**
-     * Establece y pinta el imagén cuando el Task ha terminado con éxito.
+     * Establece y pinta el imagén del artista cuando el Task ha terminado con éxito.
      */
     private void renderImageOnTaskSucceeded() {
         albumTask.setOnSucceeded(event -> {

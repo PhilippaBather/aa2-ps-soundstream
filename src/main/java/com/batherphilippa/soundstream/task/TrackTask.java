@@ -22,16 +22,19 @@ public class TrackTask extends Task<Integer> {
     @Override
     protected Integer call() throws Exception {
         MusicService musicService = new MusicService();
+        final String[] imgURL = new String[1];
 
         // el consumidor recibe los detalles del identificador desde el stream y duerme para simular concurrencia
         Consumer<Track> consumer = (track) -> {
             Thread.sleep(300);
 
+            imgURL[0] = track.getAlbum().getImages().get(1).getUrl();
+
             Consumer<TrackAudioFeatures> consumer1 = (audioFeatures) -> {
                 // duereme para simular cocurrencia
                 Thread.sleep(300);
                 // analiza sintácticamente y convierte un Track en un TrackDTOOut
-                TrackDTOOut trackData = parseData(track, audioFeatures);
+                TrackDTOOut trackData = parseData(track, audioFeatures, imgURL[0]);
                 // realiza la tarea en el 'main thread' en el futuro; previene errores
                 Platform.runLater(() -> tracks.add(trackData));
             };
@@ -52,7 +55,7 @@ public class TrackTask extends Task<Integer> {
      * @param audioFeatures - TrackAudioFeatures
      * @return TrackDTOOut
      */
-    private TrackDTOOut parseData(Track track, TrackAudioFeatures audioFeatures) {
+    private TrackDTOOut parseData(Track track, TrackAudioFeatures audioFeatures, String imgUrl) {
         String artistName = track.getAlbum().getArtists().get(0).getName();
         String albumName = track.getAlbum().getName();
         // clave musical
@@ -61,7 +64,7 @@ public class TrackTask extends Task<Integer> {
         String bpm = (int) audioFeatures.getTempo() + "bpm";
         // signatura de compás
         String timeSignature = getTimeSignature(audioFeatures);
-        return new TrackDTOOut(artistName, albumName, key, bpm, timeSignature);
+        return new TrackDTOOut(artistName, albumName, key, bpm, timeSignature, imgUrl);
     }
 
 

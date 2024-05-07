@@ -16,6 +16,7 @@ public class TrackDTOOut {
     private String key;
     private String bpm;
     private String timeSignature;
+    private String imgURL;
 
     @Override
     public String toString() {
