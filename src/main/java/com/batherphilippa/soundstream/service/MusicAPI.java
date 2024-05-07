@@ -14,9 +14,10 @@ public interface MusicAPI {
     @POST("api/token")
     Observable<Token> getToken(@Header("Authorization") String auth, @Field("grant_type") String grantType);
 
+    // añadé 'offset' para devolver resultados más precisos
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @GET("v1/search")
-    Observable<ArtistSearchResult> getArtists(@Header("Authorization") String auth, @Query("q") String q, @Query("type") String type, @Query("limit") int limit);
+    Observable<ArtistSearchResult> getArtists(@Header("Authorization") String auth, @Query(value = "q") String q, @Query("type") String type, @Query("limit") int limit, @Query("offset") int offset);
 
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @GET("v1/artists/{id}/albums")

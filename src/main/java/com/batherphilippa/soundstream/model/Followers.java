@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Followers - information about the artist's followers.
+ * Followers - información sobre los seguidores de un artista.
  */
 
 @Data

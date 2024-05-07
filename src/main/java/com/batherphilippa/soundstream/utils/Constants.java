@@ -1,13 +1,29 @@
 package com.batherphilippa.soundstream.utils;
 
+/**
+ * Los constantes de la aplicación
+ */
 public class Constants {
 
-    // String formatting constants
+    // variables de entorno
+    public static final String SPOTIFY_CLIENT_ID = "SPOTIFY_CLIENT_ID";
+    public static final String SPOTIFY_CLIENT_SECRET = "SPOTIFY_CLIENT_SECRET";
+
+    // constantes del servicio
+    public static final String SPOTIFY_BASE_URL_FETCH = "https://api.spotify.com";
+    public static final String SPOTIFY_BASE_URL_TOKEN = "https://accounts.spotify.com";
+    public static final String SPOTIFY_GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
+
+    // constantes de peticiones
+    public static final String SPOTIFY_SEARCH_REQUEST_TYPE_ARTIST = "artist";
+    public static final String SPOTIFY_SEARCH_REQUEST_TYPE_TRACK = "track";
+    public static final String SPOTIFY_TYPE_ARTIST = "&type=artist";
+
+    // constantes de formateo de cadenas
     public static final String SPACE_ENCODING = "%2520";
     public static final String COLON_ENCODING = "%3A";
-    public static final String SEPARATOR = " | ";
 
-    // UI constants
+    // onstantes de la UI
     public static final String PROMPT_ALBUM_FILTER = "Filter for a word or release year";
     public static final String PROMPT_ARTIST_SEARCH = "Artist name";
     public static final String PROMPT_TRACK_SEARCH = "Track name";

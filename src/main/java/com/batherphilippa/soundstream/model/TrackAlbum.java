@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * TrackAlbum - information about the album on which the track appears.
+ * TrackAlbum - información sobre el álbum donde la canción sale.
  */
 @Data
 @NoArgsConstructor

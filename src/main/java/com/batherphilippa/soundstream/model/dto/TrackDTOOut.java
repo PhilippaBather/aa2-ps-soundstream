@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * TrackDTOOut - la clase que reprsenta la canción para mostrar en la aplicación.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
