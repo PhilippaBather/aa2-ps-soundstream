@@ -17,11 +17,6 @@ public class Constants {
     // constantes de peticiones
     public static final String SPOTIFY_SEARCH_REQUEST_TYPE_ARTIST = "artist";
     public static final String SPOTIFY_SEARCH_REQUEST_TYPE_TRACK = "track";
-    public static final String SPOTIFY_TYPE_ARTIST = "&type=artist";
-
-    // constantes de formateo de cadenas
-    public static final String SPACE_ENCODING = "%2520";
-    public static final String COLON_ENCODING = "%3A";
 
     // onstantes de la UI
     public static final String PROMPT_ALBUM_FILTER = "Filter for a word or release year";
@@ -37,5 +32,17 @@ public class Constants {
     public static final String TAB_AUDIO_FEATURES = "Audio Features";
     public static final String UI_NOTIFICATION_BLANK_QUERY_ARTIST = "Please enter an artist or group's name as a search term.";
     public static final String UI_NOTIFICATION_BLANK_QUERY_TRACK = "Please enter the name of the track you wish to query.";
+    public static final String UI_NOTIFICATION_CSV_DIR_NOT_SELECTED = "You need to select a directory to save to CSV.";
+    public static final String UI_NOTIFICATION_ERROR_WRITING_TO_CSV = "Error processing data to CSV file.  Please try again";
     public static final String UI_NOTIFICATION_UNSELECTED_FILTER = "Please select a filter option to apply a filter.";
+
+    // constantes del archivo CSV
+    public static final String CSV_HEADER_ARTIST = "Artist";
+    public static final String CSV_HEADER_ALBUM = "Album";
+    public static final String CSV_HEADER_KEY = "Key";
+    public static final String CSV_HEADER_BPM = "BPM";
+    public static final String CSV_HEADER_TIME_SIGNATURE = "Time Signature";
+    public static final String CSV_HEADER_RELEASE_DATE = "Release Date";
+    public static final String CSV_NUM_TRACKS = "Total Tracks";
+
 }
